@@ -28,11 +28,11 @@ converter-service/
 │   │   └── health_router.py
 │   ├── schemas/
 │   │   └── conversion.py
-│   ├── k8s/
-│   │   ├── configmap.py
-│   │   ├── deployment.py
-│   │   ├── ingress.py
-│   │   └── service.py
+├── k8s/
+│   ├── configmap.py
+│   ├── deployment.py
+│   ├── ingress.py
+│   └── service.py
 │── Dockerfile
 │── README.md
 └── ...
@@ -66,25 +66,37 @@ Ensure that you have installed uv-astral
 <br>
 
 ### Kubernetes Deployment
-Ensure that you have installed minikube.
-1. Start Minikube
+#### Minikube Setup
+1. Install Minikube using binary download
+    ```bash
+    curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+    sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+
+    ```
+    Or, check it yourself: [Minikube Installation](https://minikube.sigs.k8s.io/docs/start/)
+
+
+2. Start the cluster
     ```bash
     minikube start --driver=docker
     ```
 
-2. Build Docker image
+<br>
+
+#### Deployment Steps
+1. Build Docker image
     ```bash
     minikube image build -t fastapi-img:latest .
     ```
 
-3. Apply all configs:
+2. Apply all configs:
     ```bash
     kubectl apply -f k8s/configmap.yaml
     kubectl apply -f k8s/deployment.yaml
     kubectl apply -f k8s/service.yaml
     ```
 
-4. Enable Minikube Ingress
+3. Enable Minikube Ingress
     ```bash
     minikube addons enable ingress
     ```
@@ -95,12 +107,12 @@ Ensure that you have installed minikube.
     ```
 
 
-5. Add /etc/hosts entry
+4. Add /etc/hosts entry
     ```bash
     echo "$(minikube ip) converter.com" | sudo tee -a /etc/hosts
     ```
 
-6. Test it:
+5. Test it:
     ```bash
     # in the browser
     http://converter.com/docs
@@ -110,16 +122,15 @@ Ensure that you have installed minikube.
     # in the terminal
     curl http://converter.com/api/conversion/km-to-miles/12
     ```
-<br>
 
-#### Cleanup
-```bash
-kubectl delete -f ingress.yaml
-kubectl delete -f service.yaml
-kubectl delete -f deployment.yaml
-kubectl delete -f configmap.yaml
-```
-<br><br>
+    #### Cleanup
+    ```bash
+    kubectl delete -f ingress.yaml
+    kubectl delete -f service.yaml
+    kubectl delete -f deployment.yaml
+    kubectl delete -f configmap.yaml
+    ```
+    <br><br>
 
 ### Important additions:
 - Logging Configuration  
