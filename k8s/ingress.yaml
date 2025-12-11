@@ -5,7 +5,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
 spec:
-  ingressClassName: nginx
+  tls:
+  - hosts:
+    - converter.com
+    secretName: converter-secret
   rules:
   - host: converter.com
     http:

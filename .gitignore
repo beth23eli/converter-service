@@ -4,3 +4,4 @@ __pycache__/
 .idea/
 */__pycache__
 homework_text.txt
+cert/

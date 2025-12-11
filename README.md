@@ -1,5 +1,5 @@
 # converter-service
-This is a minimal FastAPI project that provides a units conversion feature. The project is containerized with Docker and deployed to Minikube.
+This is a minimal FastAPI project that provides a units conversion feature. The project is containerized with Docker and deployed to Minikube, also it has HTTPS support with mkcert.
 
 ## Features:
 * Units conversion feature, ensuring the following requests:
@@ -15,6 +15,8 @@ This is a minimal FastAPI project that provides a units conversion feature. The 
     ```
 * Configurable log level via environment variable (LOG_LEVEL); Log level managed at deployment time using a ConfigMap.
 * Deployed in Kubernetes (Minikube)
+* The FastAPI is securely exposed by generating a trusted TLS certificate for the domain of the app and used by the Kubernetes Ingress
+
 
 ## Project Structure
 
@@ -23,6 +25,8 @@ converter-service/
 │── app/
 │   ├── main.py
 │   ├── __init__.py
+│   ├── core/
+│   │   └── logging.py
 │   ├── routers/
 │   │   ├── conversion_router.py
 │   │   └── health_router.py
@@ -82,6 +86,30 @@ Ensure that you have installed uv-astral
     ```
 
 <br>
+
+#### Enabling HTTPS with mkcert
+1. Install mkcert
+    ```bash
+    sudo apt install mkcert
+    mkcert -install
+    ```
+2. Generate a certificate for the domain used by the Ingress
+    ```bash
+    mkcert converter.com
+    ```
+3. Move the files into a dedicated folder
+    ```bash
+    mkdir -p cert
+    mv converter.com.pem cert/cert.pem
+    mv converter.com-key.pem cert/key.pem
+    ```
+4. Create a Kubernetes TLS secret
+    ```bash
+    kubectl create secret tls converter-secret --cert=cert/cert.pem --key=cert/key.pem
+
+    # Verify
+    kubectl get secret converter-secret
+    ```
 
 #### Deployment Steps
 1. Build Docker image
