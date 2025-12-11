@@ -1,4 +1,4 @@
-# converter-service
+# Units Converter Service
 This is a minimal FastAPI project that provides a units conversion feature. The project is containerized with Docker and deployed to Minikube, also it has HTTPS support with mkcert.
 
 ## Features:
@@ -15,7 +15,7 @@ This is a minimal FastAPI project that provides a units conversion feature. The 
     ```
 * Configurable log level via environment variable (LOG_LEVEL); Log level managed at deployment time using a ConfigMap.
 * Deployed in Kubernetes (Minikube)
-* The FastAPI is securely exposed by generating a trusted TLS certificate for the domain of the app and used by the Kubernetes Ingress
+* The FastAPI is securely exposed by generating a trusted TLS certificate for the domain of the app and used by the Kubernetes Ingress.
 
 
 ## Project Structure
