@@ -129,7 +129,7 @@ Ensure that you have installed uv-astral
     minikube addons enable ingress
     ```
     \
-    Apply the Ingress
+    Apply the Ingress manifest
     ```bash
     kubectl apply -f k8s/ingress.yaml
     ```
