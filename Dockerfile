@@ -1,4 +1,4 @@
-FROM python:3.11-slim AS base
+FROM python:3.11-slim
 
 COPY --from=ghcr.io/astral-sh/uv:0.8 /uv /uvx /bin/
 
@@ -6,7 +6,6 @@ WORKDIR /app
 COPY pyproject.toml uv.lock /app/
 RUN uv sync --frozen
 
-FROM base AS final
 COPY app ./app
 EXPOSE 8000
 
