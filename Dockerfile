@@ -7,7 +7,7 @@ COPY pyproject.toml uv.lock /app/
 RUN uv sync --frozen
 
 FROM base AS final
-COPY . .
+COPY app ./app
 EXPOSE 8000
 
 CMD ["uv", "run", "uvicorn", "app.main:create_app", "--host", "0.0.0.0", "--port", "8000"]
