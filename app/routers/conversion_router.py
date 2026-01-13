@@ -19,7 +19,7 @@ def convert_km_to_miles(value: float):
 
 
 @router.get("/api/conversion/miles-to-km/{value}", response_model=ConversionResponse)
-def convert_km_to_miles(value: float):
+def convert_miles_to_km(value: float):
     if value < 0:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

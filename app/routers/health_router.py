@@ -1,7 +1,8 @@
 from fastapi import APIRouter, status
-from app.core.logging import logger
+import logging
 
 router = APIRouter()
+logger = logging.getLogger()
 
 
 @router.get("/health", status_code=status.HTTP_200_OK)
