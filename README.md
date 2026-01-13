@@ -18,33 +18,8 @@ This is a minimal FastAPI project that provides a units conversion feature. The 
 * The FastAPI is securely exposed by generating a trusted TLS certificate for the domain of the app and used by the Kubernetes Ingress.
 
 
-## Project Structure
-
-```
-converter-service/
-│── app/
-│   ├── main.py
-│   ├── __init__.py
-│   ├── core/
-│   │   └── logging.py
-│   ├── routers/
-│   │   ├── conversion_router.py
-│   │   └── health_router.py
-│   ├── schemas/
-│   │   └── conversion.py
-├── k8s/
-│   ├── configmap.py
-│   ├── deployment.py
-│   ├── ingress.py
-│   └── service.py
-│── Dockerfile
-│── README.md
-└── ...
-```
-
 
 ## Installation and Usage
-
 In Linux, or your Linux vm, clone this repo anywhere you want and move into the directory:
 ```
 git clone https://github.com/beth23eli/converter-service.git
