@@ -17,12 +17,9 @@ spec:
       containers:
       - name: fastapi
         image: fastapi-img:latest
-        env:
-        - name: LOG_LEVEL
-          valueFrom:
-            configMapKeyRef:
-              name: fastapi-configmap
-              key: LOG_LEVEL
+        envFrom:
+          - configMapRef:
+            name: fastapi-configmap
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
