@@ -15,6 +15,7 @@ This is a minimal FastAPI project that provides a units conversion feature. The 
     ```
 * Configurable log level via environment variable (LOG_LEVEL); Log level managed at deployment time using a ConfigMap.
 * Deployed in Kubernetes (Minikube)
+* It supports automatic scaling using HPA (Horizontal Pod Autoscaler). The HPA dynamically adjusts the number of pod replicas depending on the CPU load of the application.
 * The FastAPI is securely exposed by generating a trusted TLS certificate for the domain of the app and used by the Kubernetes Ingress.
 
 
@@ -86,6 +87,16 @@ Ensure that you have installed uv-astral
     kubectl get secret converter-secret
     ```
 
+#### Setup for Horizontal Pod Autoscaling
+1. Enable Metrics Server (Minikube)
+    ```bash
+    minikube addons enable metrics-server
+    ```
+2. Verify if it is running:
+    ```bash
+    minikube get pods -n kube-system | grep metrics
+    ```
+
 #### Deployment Steps
 1. Build Docker image
     ```bash
@@ -97,6 +108,7 @@ Ensure that you have installed uv-astral
     kubectl apply -f k8s/configmap.yaml
     kubectl apply -f k8s/deployment.yaml
     kubectl apply -f k8s/service.yaml
+    kubectl apply -f k8s/hpa.yaml
     ```
 
 3. Enable Minikube Ingress
@@ -128,10 +140,11 @@ Ensure that you have installed uv-astral
 
     #### Cleanup
     ```bash
-    kubectl delete -f ingress.yaml
-    kubectl delete -f service.yaml
-    kubectl delete -f deployment.yaml
-    kubectl delete -f configmap.yaml
+    kubectl delete -f k8s/ingress.yaml
+    kubectl delete -f k8s/service.yaml
+    kubectl delete -f k8s/deployment.yaml
+    kubectl delete -f k8s/hpa.yaml
+    kubectl delete -f k8s/configmap.yaml
     ```
     <br><br>
 
