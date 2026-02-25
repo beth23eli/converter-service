@@ -2,13 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: fastapi-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
 spec:
   tls:
   - hosts:
     - converter.com
     secretName: converter-secret
+  ingressClassName: nginx
   rules:
   - host: converter.com
     http:

@@ -4,8 +4,15 @@ metadata:
   name: fastapi-deployment
   labels:
     app: fastapi
+    version: v2.0.0
 spec:
-  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 20%
+      maxSurge: 20%
+  replicas: 5
+  revisionHistoryLimit: 0
   selector:
     matchLabels:
       app: fastapi
@@ -15,11 +22,14 @@ spec:
         app: fastapi
     spec:
       containers:
-      - name: fastapi
-        image: fastapi-img:latest
-        envFrom:
-          - configMapRef:
-            name: fastapi-configmap
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 8000
+        - name: fastapi
+          image: fastapi-img:latest
+          envFrom:
+            - configMapRef:
+                name: fastapi-configmap
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: 500m
